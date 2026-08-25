@@ -4,6 +4,10 @@ export const colors = {
   text: '#1c1917',
   'text-muted': '#78716c',
   primary: '#16a34a',
+  'primary-hover': '#15803d',
+  divider: '#e7e5e4',
+  disabled: '#e7e5e4',
+  error: '#dc2626',
   'stage-extraction': '#dc2626',
   'stage-processing': '#2563eb',
   'stage-manufacturing': '#d97706',
@@ -31,7 +35,18 @@ export const lineHeight = {
   base: 1.4,
 } as const
 
-export const tokens = { colors, fontSize, fontWeight, fontFamily, lineHeight }
+export const motion = {
+  base: '150ms ease-in-out',
+} as const
+
+export const tokens = {
+  colors,
+  fontSize,
+  fontWeight,
+  fontFamily,
+  lineHeight,
+  motion,
+}
 
 export type Token =
   keyof typeof colors | keyof typeof fontSize | keyof typeof fontWeight

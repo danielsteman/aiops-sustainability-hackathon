@@ -4,6 +4,10 @@
   --colors-text: #1c1917;
   --colors-text-muted: #78716c;
   --colors-primary: #16a34a;
+  --colors-primary-hover: #15803d;
+  --colors-divider: #e7e5e4;
+  --colors-disabled: #e7e5e4;
+  --colors-error: #dc2626;
   --colors-stage-extraction: #dc2626;
   --colors-stage-processing: #2563eb;
   --colors-stage-manufacturing: #d97706;
@@ -15,7 +19,7 @@
   --fontWeight-light: 300;
   --fontWeight-semibold: 600;
   --fontWeight-bold: 700;
-  --fontFamily-body:
-    var(--font-source-sans-3), ui-sans-serif, system-ui, sans-serif;
+  --fontFamily-body: var(--font-source-sans-3), ui-sans-serif, system-ui, sans-serif;
   --lineHeight-base: 1.4;
+  --motion-base: 150ms ease-in-out;
 }

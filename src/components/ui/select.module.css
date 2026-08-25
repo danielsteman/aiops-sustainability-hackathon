@@ -1,0 +1,19 @@
+.select {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  border: 1px solid var(--colors-divider);
+  border-radius: 4px;
+  padding: 8px 10px;
+  background: var(--colors-surface);
+  color: var(--colors-text);
+  cursor: pointer;
+}
+
+.value {
+  flex: 1;
+}
+
+.chevron {
+  color: var(--colors-text-muted);
+}

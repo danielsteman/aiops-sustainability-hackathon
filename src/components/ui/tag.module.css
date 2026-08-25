@@ -1,0 +1,39 @@
+.tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  border-radius: 4px;
+}
+
+.region {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--colors-text-muted);
+  border: 1px solid var(--colors-divider);
+  padding: 4px 7px;
+}
+
+.stage {
+  color: var(--colors-surface);
+  font-size: 14px;
+  font-weight: 600;
+  padding: 6px 10px;
+}
+
+.better {
+  color: var(--colors-primary);
+  border: 1px solid var(--colors-primary);
+  background: transparent;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 4px 7px;
+}
+
+.scaling {
+  border: 1px solid var(--colors-primary);
+  background: color-mix(in srgb, var(--colors-primary) 15%, transparent);
+  color: var(--colors-text);
+  font-size: 12px;
+  font-weight: 600;
+  padding: 4px 7px;
+}
