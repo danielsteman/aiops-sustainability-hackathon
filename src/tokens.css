@@ -1,0 +1,21 @@
+:root {
+  --colors-bg: #fafaf9;
+  --colors-surface: #ffffff;
+  --colors-text: #1c1917;
+  --colors-text-muted: #78716c;
+  --colors-primary: #16a34a;
+  --colors-stage-extraction: #dc2626;
+  --colors-stage-processing: #2563eb;
+  --colors-stage-manufacturing: #d97706;
+  --colors-stage-transport: #7c3aed;
+  --fontSize-sm: 0.875rem;
+  --fontSize-base: 1.0625rem;
+  --fontSize-lg: 1.25rem;
+  --fontSize-xl: 1.5rem;
+  --fontWeight-light: 300;
+  --fontWeight-semibold: 600;
+  --fontWeight-bold: 700;
+  --fontFamily-body:
+    var(--font-source-sans-3), ui-sans-serif, system-ui, sans-serif;
+  --lineHeight-base: 1.4;
+}

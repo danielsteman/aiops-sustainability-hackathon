@@ -1,24 +1,33 @@
 @import 'tailwindcss';
-
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+@import '../src/tokens.css';
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
+  --color-background: var(--colors-bg);
+  --color-foreground: var(--colors-text);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  margin: 0;
+  background: var(--colors-bg);
+  color: var(--colors-text);
+  font-family: var(--fontFamily-body);
+  font-size: var(--fontSize-base);
+  font-weight: var(--fontWeight-light);
+  line-height: var(--lineHeight-base);
+}
+
+a {
+  color: var(--colors-text);
+  text-decoration: none;
+  border-bottom: 1px solid currentColor;
+}
+
+a:hover {
+  color: var(--colors-primary);
 }
