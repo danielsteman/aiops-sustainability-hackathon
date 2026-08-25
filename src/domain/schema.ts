@@ -2,12 +2,9 @@ import { z } from 'zod'
 
 export const regionSchema = z.enum(['NL', 'EU', 'GLO']).nullable()
 
-export const stageNameSchema = z.enum([
-  'Raw material extraction',
-  'Processing',
-  'Manufacturing',
-  'Transport',
-])
+// Free text: datasets name stages after their own processes, and the count
+// varies per product.
+export const stageNameSchema = z.string().min(1)
 
 const positiveFinite = (): z.ZodType<number> => z.number().finite().positive()
 const nonNegativeFinite = (): z.ZodType<number> =>

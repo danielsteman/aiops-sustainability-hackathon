@@ -1,5 +1,4 @@
 import {
-  STAGE_NAMES,
   type EmissionFactor,
   type Flow,
   type Product,
@@ -60,15 +59,20 @@ export function productImpact(
   product: Product,
   factors: Factors,
 ): ProductImpacts {
-  // Seeded with every stage so the declared Record is not a lie: a product that
-  // omits a stage still reports it at zero, in canonical order.
-  const byStage = Object.fromEntries(
-    STAGE_NAMES.map((name) => [name, { ...ZERO }]),
-  ) as Record<StageName, Impacts>
+  // Keyed by the product's own stages, in their declared order: a repeated
+  // stage name accumulates rather than overwriting.
+  const byStage: Record<StageName, Impacts> = {}
   const total: Impacts = { ...ZERO }
   for (const stage of product.stages) {
     const impact = stageImpact(stage, factors)
-    byStage[stage.name] = impact
+    const existing = byStage[stage.name]
+    byStage[stage.name] = existing
+      ? {
+          gwp: existing.gwp + impact.gwp,
+          eutrophication: existing.eutrophication + impact.eutrophication,
+          water: existing.water + impact.water,
+        }
+      : impact
     total.gwp += impact.gwp
     total.eutrophication += impact.eutrophication
     total.water += impact.water

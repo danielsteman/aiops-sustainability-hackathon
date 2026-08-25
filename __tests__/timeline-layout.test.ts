@@ -15,7 +15,6 @@ import { scrollTop } from '@/src/components/timeline/flow-list'
 import { createSelectors } from '@/src/store/selectors'
 import type { StoreState } from '@/src/store/actions'
 import type { Dataset, Product } from '@/src/domain/types'
-import { STAGE_NAMES } from '@/src/domain/types'
 import type { Factors } from '@/src/domain/impact'
 
 function loadDataset(): Dataset {
@@ -33,7 +32,7 @@ function productA(dataset: Dataset): Product {
 }
 
 describe('timeline segments', () => {
-  it('renders four segments in canonical order regardless of data order', () => {
+  it('renders one segment per stage, in the order the shares arrive', () => {
     const shares = [
       { stage: 'Transport', share: 25, width: 25 },
       { stage: 'Manufacturing', share: 25, width: 25 },
@@ -41,8 +40,20 @@ describe('timeline segments', () => {
       { stage: 'Processing', share: 25, width: 25 },
     ]
     const segments = buildSegments(shares)
-    expect(segments.map((s) => s.stage)).toEqual([...STAGE_NAMES])
+    expect(segments.map((s) => s.stage)).toEqual(shares.map((s) => s.stage))
     expect(segments.map((s) => s.left)).toEqual([0, 25, 50, 75])
+  })
+
+  it('colours segments by position and wraps past the palette', () => {
+    const shares = Array.from({ length: 8 }, (_, i) => ({
+      stage: `Stage ${i}`,
+      share: 12.5,
+      width: 12.5,
+    }))
+    const colours = buildSegments(shares).map((s) => s.color)
+    expect(new Set(colours.slice(0, 6)).size).toBe(6)
+    expect(colours[6]).toBe(colours[0])
+    expect(colours[7]).toBe(colours[1])
   })
 
   it('product A on water clamps every segment to at least 3%', () => {
@@ -62,24 +73,24 @@ describe('timeline segments', () => {
     expect(manufacturing.share).not.toBeCloseTo(manufacturing.width, 1)
   })
 
-  it('a product with no flows at all renders four segments, none collapsed', () => {
+  it('a product with no flows at all renders every stage, none collapsed', () => {
     const dataset = loadDataset()
     const empty: Product = {
       ...productA(dataset),
       id: 'empty',
-      stages: STAGE_NAMES.map((name) => ({ name, flows: [] })),
+      stages: productA(dataset).stages.map((s) => ({ ...s, flows: [] })),
     }
     dataset.products.push(empty)
     const selectors = createSelectors(baseState(dataset))
     const segments = buildSegments(selectors.selectStageShares('empty', 'gwp'))
-    expect(segments).toHaveLength(4)
+    expect(segments).toHaveLength(empty.stages.length)
     for (const segment of segments) {
       expect(segment.width).toBeGreaterThan(0)
       expect(segment.share.toFixed(1)).toBe('0.0')
     }
   })
 
-  it('a product missing a stage entirely still yields four segments', () => {
+  it('a product with fewer stages yields exactly the stages it declares', () => {
     const dataset = loadDataset()
     const partial: Product = {
       ...productA(dataset),
@@ -91,9 +102,41 @@ describe('timeline segments', () => {
     const segments = buildSegments(
       selectors.selectStageShares('partial', 'gwp'),
     )
-    expect(segments.map((s) => s.stage)).toEqual([...STAGE_NAMES])
+    expect(segments.map((s) => s.stage)).toEqual(
+      partial.stages.map((s) => s.name),
+    )
     for (const segment of segments) {
       expect(segment.width).toBeGreaterThan(0)
+    }
+  })
+
+  // The bug this guards: stage names used to be a fixed four-value enum, so a
+  // dataset naming its own stages drew four empty bars and no flows at all.
+  it('renders the advanced dataset, whose stages are named per product', () => {
+    const dataset = JSON.parse(
+      readFileSync(
+        join(process.cwd(), 'docs', 'sample-data-advanced.json'),
+        'utf8',
+      ),
+    ) as Dataset
+    const selectors = createSelectors(baseState(dataset))
+    for (const product of dataset.products) {
+      const segments = buildSegments(
+        selectors.selectStageShares(product.id, 'gwp'),
+      )
+      expect(segments.map((s) => s.stage)).toEqual(
+        product.stages.map((s) => s.name),
+      )
+      const markers = buildMarkers(
+        product,
+        selectors.selectFactorsById(),
+        'gwp',
+        segments,
+      )
+      expect(markers).toHaveLength(
+        product.stages.reduce((n, s) => n + s.flows.length, 0),
+      )
+      expect(markers.some((m) => m.value > 0)).toBe(true)
     }
   })
 })

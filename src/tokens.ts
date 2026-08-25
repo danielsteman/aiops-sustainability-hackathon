@@ -10,11 +10,32 @@ export const colors = {
   disabled: '#e7e5e4',
   error: '#dc2626',
   'bar-losing': '#c8c8c8',
-  'stage-extraction': '#dc2626',
-  'stage-processing': '#2563eb',
-  'stage-manufacturing': '#d97706',
-  'stage-transport': '#7c3aed',
+  // Positional stage colours; a dataset names its own stages.
+  'stage-1': '#dc2626',
+  'stage-2': '#2563eb',
+  'stage-3': '#d97706',
+  'stage-4': '#7c3aed',
+  'stage-5': '#0d9488',
+  'stage-6': '#be185d',
 } as const
+
+/**
+ * Stage colours are positional: a dataset names its own stages, and the count
+ * varies per product, so nothing can map a colour to a fixed stage name.
+ * Products with more stages than the palette wrap around.
+ */
+export const stagePalette = [
+  colors['stage-1'],
+  colors['stage-2'],
+  colors['stage-3'],
+  colors['stage-4'],
+  colors['stage-5'],
+  colors['stage-6'],
+] as const
+
+export function stageColor(index: number): string {
+  return stagePalette[index % stagePalette.length]!
+}
 
 export const fontSize = {
   sm: '0.875rem',

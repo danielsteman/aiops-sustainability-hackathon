@@ -1,28 +1,22 @@
 import type { CSSProperties, ReactNode } from 'react'
-import { colors } from '@/src/tokens'
+import { stageColor } from '@/src/tokens'
 import styles from './tag.module.css'
 import { CheckIcon } from '@/src/components/icons/check'
-
-export type Stage = 'extraction' | 'processing' | 'manufacturing' | 'transport'
 
 interface TagProps {
   variant: 'region' | 'stage' | 'better' | 'scaling'
   region?: string | null
-  stage?: Stage
+  /** Position of the stage in its product, which is what picks the colour. */
+  stageIndex?: number
   children?: ReactNode
 }
 
-const stageColor: Record<Stage, string> = {
-  extraction: colors['stage-extraction'],
-  processing: colors['stage-processing'],
-  manufacturing: colors['stage-manufacturing'],
-  transport: colors['stage-transport'],
-}
-
-export function Tag({ variant, region, stage, children }: TagProps) {
+export function Tag({ variant, region, stageIndex, children }: TagProps) {
   const cls = [styles.tag, styles[variant]].filter(Boolean).join(' ')
   const style: CSSProperties =
-    variant === 'stage' && stage ? { backgroundColor: stageColor[stage] } : {}
+    variant === 'stage' && stageIndex !== undefined
+      ? { backgroundColor: stageColor(stageIndex) }
+      : {}
 
   if (variant === 'region') {
     return (

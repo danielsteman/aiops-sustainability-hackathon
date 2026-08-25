@@ -10,10 +10,12 @@
   --colors-disabled: #e7e5e4;
   --colors-error: #dc2626;
   --colors-bar-losing: #c8c8c8;
-  --colors-stage-extraction: #dc2626;
-  --colors-stage-processing: #2563eb;
-  --colors-stage-manufacturing: #d97706;
-  --colors-stage-transport: #7c3aed;
+  --colors-stage-1: #dc2626;
+  --colors-stage-2: #2563eb;
+  --colors-stage-3: #d97706;
+  --colors-stage-4: #7c3aed;
+  --colors-stage-5: #0d9488;
+  --colors-stage-6: #be185d;
   --fontSize-sm: 0.875rem;
   --fontSize-base: 1.0625rem;
   --fontSize-lg: 1.25rem;

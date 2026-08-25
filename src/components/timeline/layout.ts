@@ -1,8 +1,8 @@
 import type { ImpactCategory } from '@/src/domain/format'
 import type { Factors } from '@/src/domain/impact'
-import { STAGE_NAMES, type Product, type StageName } from '@/src/domain/types'
+import type { Product, StageName } from '@/src/domain/types'
 import type { StageShareResult } from '@/src/store/selectors'
-import { colors } from '@/src/tokens'
+import { stageColor } from '@/src/tokens'
 
 /**
  * Every timeline measurement lives here rather than in the stylesheet: the
@@ -34,12 +34,6 @@ export const TIERS = [
   { above: false, leader: 96 },
 ] as const
 
-export const STAGE_COLOR: Record<StageName, string> = {
-  'Raw material extraction': colors['stage-extraction'],
-  Processing: colors['stage-processing'],
-  Manufacturing: colors['stage-manufacturing'],
-  Transport: colors['stage-transport'],
-}
 
 export interface Segment {
   stage: StageName
@@ -77,21 +71,19 @@ export function flowKey(stageIndex: number, flowIndex: number): string {
 }
 
 /**
- * Segments in canonical stage order regardless of the order the shares arrive
- * in, so the axis always reads extraction → processing → manufacturing →
- * transport.
+ * One segment per stage, in the order the shares arrive — which is the order
+ * the product declares its stages, so the axis reads left to right through the
+ * lifecycle as the dataset describes it.
  */
 export function buildSegments(shares: StageShareResult[]): Segment[] {
-  const byStage = new Map(shares.map((s) => [s.stage, s]))
   let left = 0
-  return STAGE_NAMES.map((stage) => {
-    const entry = byStage.get(stage)
+  return shares.map((entry, index) => {
     const segment: Segment = {
-      stage,
-      share: entry?.share ?? 0,
-      width: entry?.width ?? 0,
+      stage: entry.stage,
+      share: entry.share,
+      width: entry.width,
       left,
-      color: STAGE_COLOR[stage],
+      color: stageColor(index),
     }
     left += segment.width
     return segment
@@ -107,9 +99,14 @@ export function buildMarkers(
   const scale = product.functional_unit_scaling_factor
   const markers: Marker[] = []
   for (const segment of segments) {
-    const stageIndex = product.stages.findIndex((s) => s.name === segment.stage)
-    const flows = product.stages[stageIndex]?.flows ?? []
-    flows.forEach((flow, flowIndex) => {
+    // A segment is one stage name, which two stages can share; every flow under
+    // that name sits on the segment, keyed by its own stage index.
+    const flows = product.stages.flatMap((stage, stageIndex) =>
+      stage.name === segment.stage
+        ? stage.flows.map((flow, flowIndex) => ({ flow, stageIndex, flowIndex }))
+        : [],
+    )
+    flows.forEach(({ flow, stageIndex, flowIndex }, position) => {
       // A flow pointing at a missing factor contributes nothing rather than
       // taking the whole view down with it.
       const factor = factors[flow.material_id]?.[category] ?? 0
@@ -121,7 +118,7 @@ export function buildMarkers(
         description: flow.description,
         value: flow.quantity * factor * scale,
         left:
-          segment.left + (segment.width * (flowIndex + 1)) / (flows.length + 1),
+          segment.left + (segment.width * (position + 1)) / (flows.length + 1),
         tier: markers.length % TIERS.length,
       })
     })

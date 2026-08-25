@@ -38,7 +38,7 @@ describe('Tag', () => {
 
   it('stage applies the stage colour as background with white text', () => {
     const { container } = render(
-      <Tag variant="stage" stage="processing">
+      <Tag variant="stage" stageIndex={1}>
         Processing
       </Tag>,
     )

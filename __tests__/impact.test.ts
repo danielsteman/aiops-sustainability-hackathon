@@ -68,7 +68,7 @@ describe('impact calculation', () => {
 
   it('productImpact returns byStage, total, and normalised', () => {
     const { byStage, total, normalised } = productImpact(productA, factors)
-    expectImpacts(byStage['Raw material extraction'], {
+    expectImpacts(byStage['Raw material extraction']!, {
       gwp: 0.0186,
       eutrophication: 0.00000385,
       water: 0.00185,

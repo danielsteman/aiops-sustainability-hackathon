@@ -1,13 +1,13 @@
 export const REGIONS = ['NL', 'EU', 'GLO'] as const
 export type Region = (typeof REGIONS)[number] | null
 
-export const STAGE_NAMES = [
-  'Raw material extraction',
-  'Processing',
-  'Manufacturing',
-  'Transport',
-] as const
-export type StageName = (typeof STAGE_NAMES)[number]
+/**
+ * Stage names are whatever the dataset calls them. Real datasets name stages
+ * after the process ("Brewing and fermentation", "Can manufacturing"), and
+ * different products in one dataset carry different stages, so nothing may key
+ * off a fixed set. Order comes from the product's own `stages` array.
+ */
+export type StageName = string
 
 export interface EmissionFactor {
   id: string
