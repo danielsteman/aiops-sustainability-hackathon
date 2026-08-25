@@ -1,13 +1,17 @@
 'use client'
 
+import { useState } from 'react'
 import { TopBar } from '@/src/components/layout/top-bar'
 import { EmptyState } from '@/src/components/layout/empty-state'
 import { NewProductAction } from '@/src/components/layout/new-product-action'
+import { LifecyclePanel } from '@/src/components/timeline'
 import { useStore } from '@/src/store/store'
 
 export default function ProductsPage() {
   const { state, dispatch, canUndo, canRedo } = useStore()
   const dataset = state.present.dataset
+  // Stale after an import that drops the product, hence the fallback below.
+  const [productId, setProductId] = useState('')
 
   if (!dataset) {
     return (
@@ -23,6 +27,9 @@ export default function ProductsPage() {
     )
   }
 
+  const product =
+    dataset.products.find((p) => p.id === productId) ?? dataset.products[0]
+
   return (
     <div className="flex flex-col min-h-full">
       <TopBar
@@ -36,7 +43,7 @@ export default function ProductsPage() {
         action={<NewProductAction />}
       />
       <div className="flex flex-col gap-4 p-20">
-        {dataset.products.length === 0 ? (
+        {!product ? (
           <EmptyState
             heading="No products yet"
             line="Create a product to get started."
@@ -44,14 +51,25 @@ export default function ProductsPage() {
             onAction={undefined}
           />
         ) : (
-          dataset.products.map((p) => (
-            <div
-              key={p.id}
-              className="rounded border border-stone-200 bg-white p-4"
-            >
-              {p.name}
-            </div>
-          ))
+          <>
+            {/* Plain select until LCA-024 brings the product tabs. */}
+            <label className="flex items-center gap-2 text-sm">
+              <span className="font-semibold">Product</span>
+              <select
+                className="rounded border border-stone-200 bg-white px-2 py-1"
+                value={product.id}
+                onChange={(e) => setProductId(e.target.value)}
+              >
+                {dataset.products.map((p) => (
+                  <option key={p.id} value={p.id}>
+                    {p.name}
+                  </option>
+                ))}
+              </select>
+            </label>
+            {/* Remount on a new dataset resets the selected metric. */}
+            <LifecyclePanel key={dataset.description} product={product} />
+          </>
         )}
       </div>
     </div>
