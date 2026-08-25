@@ -17,7 +17,7 @@ function loadDataset(): Dataset {
 }
 
 function baseState(dataset: Dataset = loadDataset()): StoreState {
-  return { dataset, fileHandle: null, dirty: false }
+  return { dataset, fileHandle: null, dirty: false, importError: false }
 }
 
 function run(state: StoreState, action: StoreAction): StoreState {
@@ -260,5 +260,38 @@ describe('dataset store actions', () => {
       payload: { productId: 'product_a', name: 'Renamed' },
     })
     expect(result.dirty).toBe(true)
+  })
+})
+
+describe('dataset store actions: persistence bookkeeping', () => {
+  it('setFileHandle stores the handle without marking dirty', () => {
+    const handle = {} as FileSystemFileHandle
+    const state = baseState()
+    const result = run(state, { type: 'setFileHandle', payload: handle })
+    expect(result.fileHandle).toBe(handle)
+    expect(result.dirty).toBe(false)
+  })
+
+  it('setImportError records an unresolved import validation error', () => {
+    const state = baseState()
+    const result = run(state, { type: 'setImportError', payload: true })
+    expect(result.importError).toBe(true)
+  })
+
+  it('__markSaved clears the dirty flag', () => {
+    const state = run(baseState(), {
+      type: 'renameProduct',
+      payload: { productId: 'product_a', name: 'Renamed' },
+    })
+    expect(state.dirty).toBe(true)
+    const result = run(state, { type: '__markSaved' })
+    expect(result.dirty).toBe(false)
+  })
+
+  it('loadDataset clears an unresolved import error', () => {
+    const state = run(baseState(), { type: 'setImportError', payload: true })
+    const dataset = loadDataset()
+    const result = run(state, { type: 'loadDataset', payload: dataset })
+    expect(result.importError).toBe(false)
   })
 })

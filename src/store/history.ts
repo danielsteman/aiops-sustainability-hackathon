@@ -22,7 +22,12 @@ export interface HistoryState {
 }
 
 export const initialHistory: HistoryState = {
-  present: { dataset: null, fileHandle: null, dirty: false },
+  present: {
+    dataset: null,
+    fileHandle: null,
+    dirty: false,
+    importError: false,
+  },
   past: [],
   future: [],
   coalesce: { lastType: null, lastKey: null, lastTime: 0 },
@@ -84,6 +89,16 @@ export function historyReducer(
       if (action.type === 'loadDataset') {
         const present = datasetReducer(state.present, action)
         return { present, past: [], future: [], coalesce: emptyCoalesce() }
+      }
+
+      // Bookkeeping actions (handle, import status, save) mutate present in
+      // place without entering the undo/redo timeline.
+      if (
+        action.type === 'setFileHandle' ||
+        action.type === 'setImportError' ||
+        action.type === '__markSaved'
+      ) {
+        return { ...state, present: datasetReducer(state.present, action) }
       }
 
       const present = datasetReducer(state.present, action)
