@@ -1,4 +1,11 @@
-import type { EmissionFactor, Flow, Product, Stage, StageName } from './types'
+import {
+  STAGE_NAMES,
+  type EmissionFactor,
+  type Flow,
+  type Product,
+  type Stage,
+  type StageName,
+} from './types'
 
 export interface Impacts {
   gwp: number
@@ -53,7 +60,11 @@ export function productImpact(
   product: Product,
   factors: Factors,
 ): ProductImpacts {
-  const byStage = {} as Record<StageName, Impacts>
+  // Seeded with every stage so the declared Record is not a lie: a product that
+  // omits a stage still reports it at zero, in canonical order.
+  const byStage = Object.fromEntries(
+    STAGE_NAMES.map((name) => [name, { ...ZERO }]),
+  ) as Record<StageName, Impacts>
   const total: Impacts = { ...ZERO }
   for (const stage of product.stages) {
     const impact = stageImpact(stage, factors)

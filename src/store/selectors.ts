@@ -40,8 +40,9 @@ function factors(dataset: Dataset): Factors {
 
 /**
  * Stage percentage shares and display widths for one impact category.
- * Widths below 3% are clamped to 3% and the whole set renormalised to sum to
- * 100. The label always prints the true share; the bar always uses the
+ * Widths below 3% — zero included, so a stage with no flows stays visible
+ * rather than collapsing — are clamped to 3% and the whole set renormalised to
+ * sum to 100. The label always prints the true share; the bar always uses the
  * clamped width.
  */
 export function stageShares(
@@ -60,7 +61,7 @@ export function stageShares(
 
   const clamped = raw.map((r) => ({
     ...r,
-    width: r.share < CLAMP_MIN && r.share > 0 ? CLAMP_MIN : r.share,
+    width: r.share < CLAMP_MIN ? CLAMP_MIN : r.share,
   }))
 
   const clampedSum = clamped.reduce((sum, c) => sum + c.width, 0)

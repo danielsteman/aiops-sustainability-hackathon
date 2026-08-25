@@ -1,0 +1,257 @@
+.panel {
+  background: var(--colors-surface);
+  padding: 25px;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 12px;
+}
+
+.title {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--colors-neutral);
+}
+
+/* Segmented control: one bordered group, dividers between segments. */
+.switcher {
+  display: flex;
+  border: 1px solid var(--colors-divider);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.switch {
+  padding: 6px 14px;
+  border: 0;
+  border-left: 1px solid var(--colors-divider);
+  background: var(--colors-surface);
+  font: inherit;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--colors-neutral);
+  cursor: pointer;
+  transition: var(--motion-base);
+  transition-property: background-color, color;
+}
+
+.switch:first-child {
+  border-left: 0;
+}
+
+.switch:hover {
+  background: var(--colors-bg);
+}
+
+.switch[data-active='true'],
+.switch[data-active='true']:hover {
+  background: var(--colors-primary);
+  color: var(--colors-surface);
+}
+
+.timeline {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+}
+
+.axis {
+  position: absolute;
+  left: 0;
+  right: 0;
+  display: flex;
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.segment {
+  height: 100%;
+}
+
+.stageLabels {
+  position: absolute;
+  left: 0;
+  right: 0;
+  display: flex;
+}
+
+.stageLabel {
+  padding: 0 2px;
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--colors-neutral);
+}
+
+/*
+ * Each marker spans the whole container so its dot, leader and label can be
+ * placed against the same origin; only the dot takes pointer events.
+ */
+.marker {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.leader {
+  position: absolute;
+  left: calc(var(--marker-left) - 0.5px);
+  width: 1px;
+  background: var(--colors-divider);
+  transition: background-color var(--motion-base);
+}
+
+.dot {
+  position: absolute;
+  left: calc(var(--marker-left) - 7px);
+  width: 14px;
+  height: 14px;
+  padding: 0;
+  border: 2px solid var(--colors-text);
+  border-radius: 50%;
+  background: var(--colors-surface);
+  cursor: pointer;
+  pointer-events: auto;
+  transition: var(--motion-base);
+  transition-property: width, height, margin, background-color, border-color;
+}
+
+/*
+ * The negative margin absorbs the 4px of extra diameter so the dot grows about
+ * its own centre without the inline `left` and `top` having to change.
+ */
+.marker[data-selected='true'] .dot {
+  width: 18px;
+  height: 18px;
+  margin: -2px 0 0 -2px;
+  background: var(--colors-primary);
+  border-color: var(--colors-surface);
+  box-shadow: 0 0 0 2px var(--colors-primary);
+}
+
+.marker[data-selected='true'] .leader {
+  background: var(--colors-primary);
+}
+
+.label {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  pointer-events: none;
+}
+
+/*
+ * Both lines are single-line with ellipsis: a wrapping label pushes into the
+ * neighbouring tier and the four-tier layout stops holding.
+ */
+.labelText,
+.labelValue {
+  display: block;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  line-height: 1.4;
+}
+
+.labelText {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--colors-text);
+}
+
+.labelValue {
+  font-size: 12px;
+  font-weight: 400;
+  color: var(--colors-neutral);
+  font-variant-numeric: tabular-nums;
+}
+
+.marker[data-selected='true'] .labelText,
+.marker[data-selected='true'] .labelValue {
+  color: var(--colors-primary);
+}
+
+.srOnly {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+/* Own scroll container, so selecting a marker never scrolls the page. */
+.flowList {
+  position: relative;
+  max-height: 320px;
+  overflow-y: auto;
+  border-top: 1px solid var(--colors-divider);
+}
+
+.flowRow {
+  display: grid;
+  grid-template-columns: 200px 1fr 180px;
+  align-items: center;
+  gap: 16px;
+  width: 100%;
+  padding: 8px 12px;
+  border: 0;
+  border-left: 2px solid transparent;
+  border-bottom: 1px solid var(--colors-divider);
+  background: var(--colors-surface);
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+  transition: background-color var(--motion-base);
+}
+
+.flowRow:hover {
+  background: var(--colors-bg);
+}
+
+.flowRow[data-selected='true'],
+.flowRow[data-selected='true']:hover {
+  background: color-mix(in srgb, var(--colors-primary) 10%, transparent);
+  border-left-color: var(--colors-primary);
+}
+
+.flowRow[data-selected='true'] .flowDescription,
+.flowRow[data-selected='true'] .flowValue {
+  font-weight: 600;
+}
+
+.flowStage {
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--colors-neutral);
+}
+
+.flowDescription {
+  font-size: 14px;
+  color: var(--colors-text);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.flowValue {
+  font-size: 14px;
+  color: var(--colors-text);
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
