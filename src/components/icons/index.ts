@@ -1,2 +1,8 @@
 export { CheckIcon } from './check'
 export { ChevronDownIcon } from './chevron-down'
+export { ImportIcon } from './import'
+export { ProductsIcon } from './products'
+export { FactorsIcon } from './factors'
+export { CompareIcon } from './compare'
+export { UndoIcon } from './undo'
+export { RedoIcon } from './redo'
