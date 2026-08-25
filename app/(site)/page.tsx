@@ -3,7 +3,7 @@
 import { StoreProvider, useStore } from '@/src/store/store'
 import { useUndoRedoShortcuts } from '@/src/store/use-undo-redo'
 import {
-  supportsFileSystemAccess,
+  useSupportsFileSystemAccess,
   BrowserSupportNotice,
 } from '@/src/persistence/browser-support'
 import { usePersistence } from '@/src/persistence/use-persistence'
@@ -48,7 +48,7 @@ const STAGE_KEY: Record<string, keyof typeof colors> = {
  * gated behind a full-page notice and no store is initialised.
  */
 export default function Home() {
-  if (!supportsFileSystemAccess()) {
+  if (!useSupportsFileSystemAccess()) {
     return <BrowserSupportNotice />
   }
 

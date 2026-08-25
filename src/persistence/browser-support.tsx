@@ -1,13 +1,23 @@
+import { useSyncExternalStore } from 'react'
+
 /**
  * Feature-detect support for the File System Access API. The persistence
  * feature depends on it, so unsupported browsers get a full-page notice
  * instead of a silently-degraded app.
  */
 export function supportsFileSystemAccess(): boolean {
-  return (
-    typeof window !== 'undefined' &&
-    typeof window.showOpenFilePicker === 'function'
-  )
+  return typeof window.showOpenFilePicker === 'function'
+}
+
+const subscribe = () => () => {}
+
+/**
+ * Hydration-safe version of {@link supportsFileSystemAccess}. Support cannot be
+ * detected on the server, so SSR optimistically assumes it is there and the
+ * client corrects to the notice after hydration if it is not.
+ */
+export function useSupportsFileSystemAccess(): boolean {
+  return useSyncExternalStore(subscribe, supportsFileSystemAccess, () => true)
 }
 
 export const SUPPORT_NOTICE_HEADING = 'This app needs a Chromium browser'

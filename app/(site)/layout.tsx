@@ -4,7 +4,7 @@ import type { ReactNode } from 'react'
 import { StoreProvider, useStore } from '@/src/store/store'
 import { useUndoRedoShortcuts } from '@/src/store/use-undo-redo'
 import {
-  supportsFileSystemAccess,
+  useSupportsFileSystemAccess,
   BrowserSupportNotice,
 } from '@/src/persistence/browser-support'
 import { usePersistence } from '@/src/persistence/use-persistence'
@@ -33,7 +33,7 @@ const NAV_ITEMS: NavItem[] = [
  * once here and shared with every child route.
  */
 export default function SiteLayout({ children }: { children: ReactNode }) {
-  if (!supportsFileSystemAccess()) {
+  if (!useSupportsFileSystemAccess()) {
     return <BrowserSupportNotice />
   }
 
