@@ -1,0 +1,39 @@
+.field {
+  display: inline-flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.input {
+  border: 1px solid var(--colors-divider);
+  border-radius: 4px;
+  padding: 8px 10px;
+  font-size: var(--fontSize-base);
+  font-family: var(--fontFamily-body);
+  color: var(--colors-text);
+  background: var(--colors-surface);
+  transition: border-color var(--motion-base);
+}
+
+.input:hover {
+  border-color: var(--colors-text-muted);
+}
+
+.input:focus {
+  outline: none;
+  border-color: var(--colors-primary);
+}
+
+.error {
+  border-color: var(--colors-error);
+}
+
+.numeric {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+.helper {
+  font-size: 14px;
+  color: var(--colors-error);
+}
