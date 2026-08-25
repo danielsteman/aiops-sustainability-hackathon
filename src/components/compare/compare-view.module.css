@@ -1,0 +1,15 @@
+.view {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.blocks {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.blocks[data-disabled='true'] {
+  opacity: 0.4;
+}
