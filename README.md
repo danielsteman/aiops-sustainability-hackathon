@@ -1,30 +1,42 @@
 # AIOps Sustainability Hackathon
 
+A client-only Next.js app (App Router) harness. It ships no server actions, no
+API routes, and makes zero network requests after the first page load.
+
+## Requirements
+
+- Node.js and [pnpm](https://pnpm.io)
+- Next.js 16 (App Router), React 19
+- TypeScript with `strict` and `noUncheckedIndexedAccess`
+- Vitest + Testing Library (80% coverage threshold, enforced in CI)
+
+## Scripts
+
+| Command             | Description                                              |
+| ------------------- | -------------------------------------------------------- |
+| `pnpm dev`          | Start the development server at http://localhost:3000    |
+| `pnpm test`         | Run the unit test suite once                             |
+| `pnpm test:coverage`| Run tests and assert the 80% line coverage threshold     |
+| `pnpm build`        | Create a production build (fails on any TS error)        |
+| `pnpm lint`         | Lint with ESLint (`no-explicit-any` is an error)         |
+| `pnpm format`       | Format the codebase with Prettier                        |
+
 ## Getting Started
 
-First, run the development server:
-
 ```bash
+pnpm install
 pnpm dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000) with your browser to see
+the result.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Project structure
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- `app/(site)/page.tsx` — the single client-only route (static).
+- `__tests__/` — unit tests for app components.
 
-## Learn More
+## Token reduction tools
 
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- [headroom](https://github.com/headroomlabs-ai/headroom)
+- [caveman](https://github.com/juliusbrussee/caveman)
