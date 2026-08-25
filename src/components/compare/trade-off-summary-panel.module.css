@@ -1,0 +1,86 @@
+.panel {
+  display: grid;
+  grid-template-columns: 420px 1fr;
+  gap: 24px;
+  background: var(--colors-surface);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+  padding: 24px;
+}
+
+.matrix {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.header,
+.row,
+.totalRow {
+  display: grid;
+  grid-template-columns: 1fr 14px 14px;
+  align-items: center;
+  gap: 16px;
+}
+
+.productName {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--colors-text-muted);
+  text-align: center;
+}
+
+.categoryLabel {
+  font-size: 14px;
+  color: var(--colors-text);
+}
+
+.dot {
+  width: 14px;
+  height: 14px;
+  border-radius: 9999px;
+  border: 1px solid var(--colors-divider);
+  background: var(--colors-surface);
+  justify-self: center;
+}
+
+.dot[data-winner='true'] {
+  background: var(--colors-primary);
+  border-color: var(--colors-primary);
+}
+
+.divider {
+  height: 1px;
+  background: var(--colors-divider);
+  margin: 8px 0;
+}
+
+.totalRow {
+  font-weight: 700;
+}
+
+.totalCount {
+  font-size: 17px;
+  font-weight: 700;
+  text-align: center;
+}
+
+.summary {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  justify-content: center;
+}
+
+.sentence {
+  margin: 0;
+  font-size: 30px;
+  font-weight: 600;
+  line-height: 1.2;
+  color: var(--colors-text);
+}
+
+.note {
+  margin: 0;
+  font-size: 14px;
+  color: var(--colors-text-muted);
+}

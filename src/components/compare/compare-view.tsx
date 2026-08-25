@@ -2,12 +2,16 @@
 
 import { useMemo } from 'react'
 import type { Product } from '@/src/domain/types'
-import { CATEGORY_ORDER } from '@/src/domain/compare'
+import { CATEGORY_ORDER, summarise } from '@/src/domain/compare'
 import type { ImpactCategory } from '@/src/domain/format'
 import { createSelectors } from '@/src/store/selectors'
 import { useStore } from '@/src/store/store'
-import { ProductSummaryCards, type ProductCardData } from './product-summary-cards'
+import {
+  ProductSummaryCards,
+  type ProductCardData,
+} from './product-summary-cards'
 import { CategoryBlock } from './category-block'
+import { TradeOffSummaryPanel } from './trade-off-summary-panel'
 import styles from './compare-view.module.css'
 
 const CATEGORY_LABEL: Record<
@@ -86,6 +90,13 @@ export function CompareView() {
           )
         })}
       </div>
+
+      <TradeOffSummaryPanel
+        summary={summarise(comparison)}
+        comparisons={comparison}
+        productAName={productA.name}
+        productBName={productB.name}
+      />
     </section>
   )
 }
