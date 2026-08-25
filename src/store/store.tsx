@@ -7,27 +7,34 @@ import {
   type ReactNode,
 } from 'react'
 import {
-  datasetReducer,
-  type StoreAction,
-  type StoreState,
-} from '@/src/store/actions'
+  historyReducer,
+  initialHistory,
+  type HistoryAction,
+  type HistoryState,
+} from '@/src/store/history'
 
-export const initialState: StoreState = {
-  dataset: null,
-  fileHandle: null,
-  dirty: false,
-}
+export const initialState: HistoryState['present'] = initialHistory.present
 
 interface StoreContextValue {
-  state: StoreState
-  dispatch: Dispatch<StoreAction>
+  state: HistoryState
+  dispatch: Dispatch<HistoryAction>
+  canUndo: boolean
+  canRedo: boolean
 }
 
 const StoreContext = createContext<StoreContextValue | undefined>(undefined)
 
 export function StoreProvider({ children }: { children: ReactNode }) {
-  const [state, dispatch] = useReducer(datasetReducer, initialState)
-  const value = useMemo(() => ({ state, dispatch }), [state])
+  const [state, dispatch] = useReducer(historyReducer, initialHistory)
+  const value = useMemo(
+    () => ({
+      state,
+      dispatch,
+      canUndo: state.past.length > 0,
+      canRedo: state.future.length > 0,
+    }),
+    [state],
+  )
   return <StoreContext.Provider value={value}>{children}</StoreContext.Provider>
 }
 
