@@ -1,26 +1,35 @@
-import type {
-  Dataset,
-  EmissionFactor,
-  Flow,
-  Product,
-} from '@/src/domain/types'
+import type { Dataset, EmissionFactor, Flow, Product } from '@/src/domain/types'
 import { parseDataset } from '@/src/domain/schema'
 
 export interface StoreState {
   dataset: Dataset | null
   fileHandle: FileSystemFileHandle | null
   dirty: boolean
+  importError: boolean
 }
 
 export type StoreAction =
   | { type: 'loadDataset'; payload: Dataset }
+  | { type: 'setFileHandle'; payload: FileSystemFileHandle | null }
+  | { type: 'setImportError'; payload: boolean }
+  | { type: '__markSaved' }
   | {
       type: 'setFlowQuantity'
-      payload: { productId: string; stageIndex: number; flowIndex: number; value: number }
+      payload: {
+        productId: string
+        stageIndex: number
+        flowIndex: number
+        value: number
+      }
     }
   | {
       type: 'setFlowMaterial'
-      payload: { productId: string; stageIndex: number; flowIndex: number; materialId: string }
+      payload: {
+        productId: string
+        stageIndex: number
+        flowIndex: number
+        materialId: string
+      }
     }
   | {
       type: 'addFlow'
@@ -33,7 +42,10 @@ export type StoreAction =
   | { type: 'renameProduct'; payload: { productId: string; name: string } }
   | { type: 'setScalingFactor'; payload: { productId: string; factor: number } }
   | { type: 'addFactor'; payload: EmissionFactor }
-  | { type: 'updateFactor'; payload: { id: string; patch: Partial<EmissionFactor> } }
+  | {
+      type: 'updateFactor'
+      payload: { id: string; patch: Partial<EmissionFactor> }
+    }
   | { type: 'deleteFactor'; payload: { id: string } }
   | { type: 'createProduct'; payload: Product }
 
@@ -66,7 +78,17 @@ export function datasetReducer(
         ...state,
         dataset: action.payload,
         dirty: false,
+        importError: false,
       }
+
+    case 'setFileHandle':
+      return { ...state, fileHandle: action.payload }
+
+    case 'setImportError':
+      return { ...state, importError: action.payload }
+
+    case '__markSaved':
+      return { ...state, dirty: false }
 
     case 'setFlowQuantity':
       return withValidDataset(state, (dataset) => {
@@ -211,9 +233,7 @@ export function datasetReducer(
       return withValidDataset(state, (dataset) => {
         const referenced = dataset.products.some((product) =>
           product.stages.some((stage) =>
-            stage.flows.some(
-              (flow) => flow.material_id === action.payload.id,
-            ),
+            stage.flows.some((flow) => flow.material_id === action.payload.id),
           ),
         )
         if (referenced) return dataset
