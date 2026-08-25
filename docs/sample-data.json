@@ -1,0 +1,321 @@
+{
+  "schema_version": "1.0",
+  "description": "LCA Comparison Tool — sample data. Compares a 750 ml glass mineral water bottle with a 500 ml PET mineral water bottle, both assessed against a common functional unit of 1 litre of still mineral water delivered to consumer.",
+  "emission_factor_database": [
+    {
+      "id": "silica_sand",
+      "name": "Silica sand, extracted",
+      "unit": "kg",
+      "region": null,
+      "gwp": 0.004,
+      "eutrophication": 0.000002,
+      "water": 0.002
+    },
+    {
+      "id": "soda_ash",
+      "name": "Soda ash (sodium carbonate)",
+      "unit": "kg",
+      "region": null,
+      "gwp": 0.22,
+      "eutrophication": 0.000035,
+      "water": 0.015
+    },
+    {
+      "id": "limestone",
+      "name": "Limestone, crushed",
+      "unit": "kg",
+      "region": null,
+      "gwp": 0.008,
+      "eutrophication": 0.000003,
+      "water": 0.003
+    },
+    {
+      "id": "recycled_glass_cullet",
+      "name": "Recycled glass cullet",
+      "unit": "kg",
+      "region": null,
+      "gwp": 0.012,
+      "eutrophication": 0.000005,
+      "water": 0.001
+    },
+    {
+      "id": "natural_gas_heat",
+      "name": "Natural gas, combusted for heat",
+      "unit": "kWh",
+      "region": null,
+      "gwp": 0.2,
+      "eutrophication": 0.000003,
+      "water": 0.001
+    },
+    {
+      "id": "electricity_grid_NL",
+      "name": "Electricity, grid average",
+      "unit": "kWh",
+      "region": "NL",
+      "gwp": 0.31,
+      "eutrophication": 0.000025,
+      "water": 0.004
+    },
+    {
+      "id": "electricity_grid_EU",
+      "name": "Electricity, grid average",
+      "unit": "kWh",
+      "region": "EU",
+      "gwp": 0.25,
+      "eutrophication": 0.00002,
+      "water": 0.006
+    },
+    {
+      "id": "electricity_grid_GLO",
+      "name": "Electricity, grid average",
+      "unit": "kWh",
+      "region": "GLO",
+      "gwp": 0.48,
+      "eutrophication": 0.000045,
+      "water": 0.01
+    },
+    {
+      "id": "pet_resin_virgin",
+      "name": "PET resin, virgin",
+      "unit": "kg",
+      "region": null,
+      "gwp": 2.73,
+      "eutrophication": 0.0025,
+      "water": 0.12
+    },
+    {
+      "id": "polypropylene",
+      "name": "Polypropylene, general purpose",
+      "unit": "kg",
+      "region": null,
+      "gwp": 1.85,
+      "eutrophication": 0.00062,
+      "water": 0.08
+    },
+    {
+      "id": "paper_and_board",
+      "name": "Paper and paperboard",
+      "unit": "kg",
+      "region": null,
+      "gwp": 0.94,
+      "eutrophication": 0.00028,
+      "water": 0.1
+    },
+    {
+      "id": "process_water",
+      "name": "Process water, industrial",
+      "unit": "L",
+      "region": null,
+      "gwp": 0.0003,
+      "eutrophication": 0.0000005,
+      "water": 1.0
+    },
+    {
+      "id": "road_freight",
+      "name": "Road freight transport, average truck",
+      "unit": "kg·km",
+      "region": null,
+      "gwp": 0.000096,
+      "eutrophication": 0.00000005,
+      "water": 0.000001
+    }
+  ],
+  "products": [
+    {
+      "id": "product_a",
+      "name": "Still mineral water, 750 ml glass bottle",
+      "functional_unit": "1 litre of still mineral water delivered to consumer",
+      "functional_unit_scaling_factor": 1.3333,
+      "notes": "A 750 ml bottle delivers 0.75 L per unit. All per-bottle impacts must be multiplied by 1000/750 ≈ 1.3333 to normalise to the functional unit before comparison.",
+      "stages": [
+        {
+          "name": "Raw material extraction",
+          "flows": [
+            {
+              "material_id": "silica_sand",
+              "description": "Primary glass-forming component (~60% of glass mass)",
+              "quantity": 0.25,
+              "unit": "kg"
+            },
+            {
+              "material_id": "soda_ash",
+              "description": "Flux agent, lowers furnace melting point",
+              "quantity": 0.07,
+              "unit": "kg"
+            },
+            {
+              "material_id": "limestone",
+              "description": "Chemical stabiliser",
+              "quantity": 0.05,
+              "unit": "kg"
+            },
+            {
+              "material_id": "recycled_glass_cullet",
+              "description": "30% recycled glass content, reduces raw material and energy demand",
+              "quantity": 0.15,
+              "unit": "kg"
+            }
+          ]
+        },
+        {
+          "name": "Processing",
+          "flows": [
+            {
+              "material_id": "natural_gas_heat",
+              "description": "Glass furnace combustion (melting at ~1500°C)",
+              "quantity": 0.5,
+              "unit": "kWh"
+            },
+            {
+              "material_id": "electricity_grid_NL",
+              "description": "Forming and annealing machinery",
+              "quantity": 0.12,
+              "unit": "kWh"
+            }
+          ]
+        },
+        {
+          "name": "Manufacturing",
+          "flows": [
+            {
+              "material_id": "electricity_grid_NL",
+              "description": "Filling line and quality inspection",
+              "quantity": 0.04,
+              "unit": "kWh"
+            },
+            {
+              "material_id": "process_water",
+              "description": "Industrial cooling water and rinsing",
+              "quantity": 1.8,
+              "unit": "L"
+            },
+            {
+              "material_id": "polypropylene",
+              "description": "Closure cap",
+              "quantity": 0.004,
+              "unit": "kg"
+            },
+            {
+              "material_id": "paper_and_board",
+              "description": "Adhesive label",
+              "quantity": 0.003,
+              "unit": "kg"
+            }
+          ]
+        },
+        {
+          "name": "Transport",
+          "flows": [
+            {
+              "material_id": "road_freight",
+              "description": "Raw materials to glass plant (avg 200 km, 0.52 kg batch)",
+              "quantity": 100,
+              "unit": "kg·km"
+            },
+            {
+              "material_id": "road_freight",
+              "description": "Glass bottle to filling facility (130 km, 0.42 kg empty bottle)",
+              "quantity": 52,
+              "unit": "kg·km"
+            },
+            {
+              "material_id": "road_freight",
+              "description": "Filled product to retail distribution (165 km, 1.18 kg filled bottle)",
+              "quantity": 195,
+              "unit": "kg·km"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "product_b",
+      "name": "Still mineral water, 500 ml PET bottle",
+      "functional_unit": "1 litre of still mineral water delivered to consumer",
+      "functional_unit_scaling_factor": 2.0,
+      "notes": "A 500 ml bottle delivers 0.5 L per unit. All per-bottle impacts must be multiplied by 1000/500 = 2.0 to normalise to the functional unit before comparison.",
+      "stages": [
+        {
+          "name": "Raw material extraction",
+          "flows": [
+            {
+              "material_id": "pet_resin_virgin",
+              "description": "Primary bottle body material (virgin PET)",
+              "quantity": 0.022,
+              "unit": "kg"
+            },
+            {
+              "material_id": "polypropylene",
+              "description": "Closure cap",
+              "quantity": 0.003,
+              "unit": "kg"
+            },
+            {
+              "material_id": "paper_and_board",
+              "description": "Adhesive label",
+              "quantity": 0.002,
+              "unit": "kg"
+            }
+          ]
+        },
+        {
+          "name": "Processing",
+          "flows": [
+            {
+              "material_id": "electricity_grid_EU",
+              "description": "Blow moulding of PET preform (EU average grid, reflects resin import origin)",
+              "quantity": 0.018,
+              "unit": "kWh"
+            },
+            {
+              "material_id": "process_water",
+              "description": "Mould cooling water",
+              "quantity": 0.3,
+              "unit": "L"
+            }
+          ]
+        },
+        {
+          "name": "Manufacturing",
+          "flows": [
+            {
+              "material_id": "electricity_grid_NL",
+              "description": "Filling line and quality inspection",
+              "quantity": 0.008,
+              "unit": "kWh"
+            },
+            {
+              "material_id": "process_water",
+              "description": "Rinsing and sanitation",
+              "quantity": 0.2,
+              "unit": "L"
+            }
+          ]
+        },
+        {
+          "name": "Transport",
+          "flows": [
+            {
+              "material_id": "road_freight",
+              "description": "PET resin to bottle plant (250 km, 0.027 kg materials)",
+              "quantity": 6.0,
+              "unit": "kg·km"
+            },
+            {
+              "material_id": "road_freight",
+              "description": "PET bottle to filling facility (80 km, 0.027 kg empty bottle)",
+              "quantity": 2.5,
+              "unit": "kg·km"
+            },
+            {
+              "material_id": "road_freight",
+              "description": "Filled product to retail distribution (125 km, 0.527 kg filled bottle)",
+              "quantity": 65,
+              "unit": "kg·km"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,544 @@
+{
+  "schema_version": "1.0",
+  "description": "LCA Comparison Tool — advanced sample data. Compares a 330 ml craft amber ale in a glass bottle with the same ale in a 440 ml tinplate steel can. Functional unit: 1 litre of craft ale at point of consumer purchase. Both products share the same beer recipe, scaled proportionally to their respective volumes.",
+  "emission_factor_database": [
+    {
+      "id": "malting_barley",
+      "name": "Malting barley, conventional",
+      "unit": "kg",
+      "region": null,
+      "gwp": 0.32,
+      "eutrophication": 0.00028,
+      "water": 2.1
+    },
+    {
+      "id": "dried_hops",
+      "name": "Hops, dried, conventional",
+      "unit": "kg",
+      "region": null,
+      "gwp": 3.8,
+      "eutrophication": 0.00085,
+      "water": 35.0
+    },
+    {
+      "id": "brewer_yeast",
+      "name": "Brewer's yeast, dry pitch",
+      "unit": "kg",
+      "region": null,
+      "gwp": 1.65,
+      "eutrophication": 0.00025,
+      "water": 12.0
+    },
+    {
+      "id": "co2_beverage",
+      "name": "Carbon dioxide, beverage grade",
+      "unit": "kg",
+      "region": null,
+      "gwp": 0.95,
+      "eutrophication": 0.000015,
+      "water": 0.3
+    },
+    {
+      "id": "diatomaceous_earth",
+      "name": "Diatomaceous earth, filter aid",
+      "unit": "kg",
+      "region": null,
+      "gwp": 0.28,
+      "eutrophication": 0.00004,
+      "water": 0.2
+    },
+    {
+      "id": "sodium_hydroxide",
+      "name": "Sodium hydroxide, 50% solution",
+      "unit": "kg",
+      "region": null,
+      "gwp": 1.05,
+      "eutrophication": 0.000035,
+      "water": 0.22
+    },
+    {
+      "id": "phosphoric_acid",
+      "name": "Phosphoric acid, 85%",
+      "unit": "kg",
+      "region": null,
+      "gwp": 1.18,
+      "eutrophication": 0.00028,
+      "water": 0.35
+    },
+    {
+      "id": "glass_primary",
+      "name": "Glass, primary (container grade)",
+      "unit": "kg",
+      "region": null,
+      "gwp": 0.76,
+      "eutrophication": 0.000028,
+      "water": 4.5
+    },
+    {
+      "id": "recycled_glass_cullet",
+      "name": "Recycled glass cullet",
+      "unit": "kg",
+      "region": null,
+      "gwp": 0.085,
+      "eutrophication": 0.00001,
+      "water": 0.8
+    },
+    {
+      "id": "tinplate_steel_primary",
+      "name": "Tinplate steel, primary production",
+      "unit": "kg",
+      "region": null,
+      "gwp": 2.15,
+      "eutrophication": 0.0015,
+      "water": 0.85
+    },
+    {
+      "id": "tinplate_steel_recycled",
+      "name": "Tinplate steel, from electric arc recycling",
+      "unit": "kg",
+      "region": null,
+      "gwp": 0.68,
+      "eutrophication": 0.00045,
+      "water": 0.25
+    },
+    {
+      "id": "polypropylene",
+      "name": "Polypropylene, general purpose",
+      "unit": "kg",
+      "region": null,
+      "gwp": 1.85,
+      "eutrophication": 0.00062,
+      "water": 0.08
+    },
+    {
+      "id": "paper_and_board",
+      "name": "Paper and paperboard",
+      "unit": "kg",
+      "region": null,
+      "gwp": 0.94,
+      "eutrophication": 0.00028,
+      "water": 0.1
+    },
+    {
+      "id": "natural_gas_heat_EU",
+      "name": "Natural gas, combusted for heat",
+      "unit": "kWh",
+      "region": "EU",
+      "gwp": 0.2,
+      "eutrophication": 0.000003,
+      "water": 0.001
+    },
+    {
+      "id": "natural_gas_heat_GLO",
+      "name": "Natural gas, combusted for heat",
+      "unit": "kWh",
+      "region": "GLO",
+      "gwp": 0.22,
+      "eutrophication": 0.000005,
+      "water": 0.001
+    },
+    {
+      "id": "electricity_grid_NL",
+      "name": "Electricity, grid average",
+      "unit": "kWh",
+      "region": "NL",
+      "gwp": 0.31,
+      "eutrophication": 0.000025,
+      "water": 0.004
+    },
+    {
+      "id": "electricity_grid_EU",
+      "name": "Electricity, grid average",
+      "unit": "kWh",
+      "region": "EU",
+      "gwp": 0.25,
+      "eutrophication": 0.00002,
+      "water": 0.006
+    },
+    {
+      "id": "electricity_grid_GLO",
+      "name": "Electricity, grid average",
+      "unit": "kWh",
+      "region": "GLO",
+      "gwp": 0.48,
+      "eutrophication": 0.000045,
+      "water": 0.01
+    },
+    {
+      "id": "process_water",
+      "name": "Process water, industrial",
+      "unit": "L",
+      "region": null,
+      "gwp": 0.0003,
+      "eutrophication": 0.0000005,
+      "water": 1.0
+    },
+    {
+      "id": "wastewater_brewery",
+      "name": "Wastewater treatment, brewery effluent",
+      "unit": "L",
+      "region": null,
+      "gwp": 0.00095,
+      "eutrophication": 0.0000022,
+      "water": 0.0
+    },
+    {
+      "id": "road_freight",
+      "name": "Road freight transport, average truck",
+      "unit": "kg·km",
+      "region": null,
+      "gwp": 0.000096,
+      "eutrophication": 0.00000005,
+      "water": 0.000001
+    },
+    {
+      "id": "sea_freight",
+      "name": "Sea freight transport, container ship",
+      "unit": "kg·km",
+      "region": null,
+      "gwp": 0.00001,
+      "eutrophication": 0.000000008,
+      "water": 0.0000005
+    }
+  ],
+  "products": [
+    {
+      "id": "product_a",
+      "name": "Craft amber ale, 330 ml glass bottle",
+      "functional_unit": "1 litre of craft ale at point of consumer purchase",
+      "functional_unit_scaling_factor": 3.0303,
+      "notes": "A 330 ml bottle delivers 0.33 L per unit. All per-bottle impacts must be multiplied by 1000/330 ≈ 3.0303 to normalise to the 1 L functional unit. The glass bottle accounts for ~35% of the total GWP.",
+      "stages": [
+        {
+          "name": "Ingredient sourcing",
+          "flows": [
+            {
+              "material_id": "malting_barley",
+              "description": "Base malt, pale ale malt (300 g/L recipe, per 330 ml batch)",
+              "quantity": 0.1,
+              "unit": "kg"
+            },
+            {
+              "material_id": "dried_hops",
+              "description": "Dual-purpose hop variety, 5.5 g/L bitterness and aroma additions",
+              "quantity": 0.0018,
+              "unit": "kg"
+            },
+            {
+              "material_id": "brewer_yeast",
+              "description": "Dry ale yeast pitch, includes propagation losses",
+              "quantity": 0.0006,
+              "unit": "kg"
+            },
+            {
+              "material_id": "road_freight",
+              "description": "Malt and hops from supplier to brewery (avg 500 km, 0.104 kg total ingredients)",
+              "quantity": 52,
+              "unit": "kg·km"
+            }
+          ]
+        },
+        {
+          "name": "Brewing and fermentation",
+          "flows": [
+            {
+              "material_id": "natural_gas_heat_EU",
+              "description": "Wort boiling (60-minute boil, steam-jacketed kettle)",
+              "quantity": 0.22,
+              "unit": "kWh"
+            },
+            {
+              "material_id": "electricity_grid_NL",
+              "description": "Mash tun agitation, pumps, glycol cooling system",
+              "quantity": 0.08,
+              "unit": "kWh"
+            },
+            {
+              "material_id": "process_water",
+              "description": "Mash water, sparge water, and vessel rinsing (liquor-to-grist 3:1, sparge)",
+              "quantity": 4.2,
+              "unit": "L"
+            },
+            {
+              "material_id": "wastewater_brewery",
+              "description": "Spent grain runoff, trub, hop debris, fermenter bottoms",
+              "quantity": 2.8,
+              "unit": "L"
+            },
+            {
+              "material_id": "co2_beverage",
+              "description": "Carbonation dosing at 5.5 g/L target CO₂ volume",
+              "quantity": 0.0018,
+              "unit": "kg"
+            },
+            {
+              "material_id": "diatomaceous_earth",
+              "description": "Kieselguhr filtration aid for bright beer clarity",
+              "quantity": 0.0004,
+              "unit": "kg"
+            },
+            {
+              "material_id": "sodium_hydroxide",
+              "description": "Caustic CIP cleaning of vessels, heat exchanger, and lines",
+              "quantity": 0.0012,
+              "unit": "kg"
+            }
+          ]
+        },
+        {
+          "name": "Glass bottle production",
+          "flows": [
+            {
+              "material_id": "glass_primary",
+              "description": "Virgin glass batch (70% of 180 g bottle weight) — silica sand, soda ash, limestone",
+              "quantity": 0.126,
+              "unit": "kg"
+            },
+            {
+              "material_id": "recycled_glass_cullet",
+              "description": "Post-consumer cullet (30% recycled content, reduces furnace energy and CO₂)",
+              "quantity": 0.054,
+              "unit": "kg"
+            },
+            {
+              "material_id": "polypropylene",
+              "description": "Crown cap closure",
+              "quantity": 0.0022,
+              "unit": "kg"
+            },
+            {
+              "material_id": "paper_and_board",
+              "description": "Front label and neck wrap (pressure-sensitive adhesive paper)",
+              "quantity": 0.004,
+              "unit": "kg"
+            },
+            {
+              "material_id": "natural_gas_heat_EU",
+              "description": "Glass melting furnace (EU gas supply, ~1.3 kWh thermal per kg mixed-cullet glass)",
+              "quantity": 0.55,
+              "unit": "kWh"
+            },
+            {
+              "material_id": "electricity_grid_NL",
+              "description": "IS machine forming, annealing lehr, automated inspection line",
+              "quantity": 0.1,
+              "unit": "kWh"
+            }
+          ]
+        },
+        {
+          "name": "Bottling",
+          "flows": [
+            {
+              "material_id": "electricity_grid_NL",
+              "description": "Filling valve, crowner, labeller, conveyor",
+              "quantity": 0.035,
+              "unit": "kWh"
+            },
+            {
+              "material_id": "process_water",
+              "description": "Bottle rinser and filling line CIP",
+              "quantity": 0.55,
+              "unit": "L"
+            },
+            {
+              "material_id": "natural_gas_heat_EU",
+              "description": "Tunnel pasteurizer (low-temperature, 60°C for 15 min)",
+              "quantity": 0.018,
+              "unit": "kWh"
+            }
+          ]
+        },
+        {
+          "name": "Distribution",
+          "flows": [
+            {
+              "material_id": "road_freight",
+              "description": "Primary distribution: brewery to regional DC (250 km, 0.52 kg filled bottle)",
+              "quantity": 130,
+              "unit": "kg·km"
+            },
+            {
+              "material_id": "road_freight",
+              "description": "Secondary distribution: DC to retail outlet (80 km, 0.52 kg)",
+              "quantity": 42,
+              "unit": "kg·km"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "product_b",
+      "name": "Craft amber ale, 440 ml tinplate steel can",
+      "functional_unit": "1 litre of craft ale at point of consumer purchase",
+      "functional_unit_scaling_factor": 2.2727,
+      "notes": "A 440 ml can delivers 0.44 L per unit. All per-can impacts must be multiplied by 1000/440 ≈ 2.2727 to normalise to the 1 L functional unit. The beer recipe is identical to Product A, scaled proportionally. Can body is 40% primary and 60% recycled tinplate steel. Tinplate coil is imported by sea from a steel mill.",
+      "stages": [
+        {
+          "name": "Ingredient sourcing",
+          "flows": [
+            {
+              "material_id": "malting_barley",
+              "description": "Base malt, pale ale malt — same recipe as glass bottle, scaled for 440 ml volume",
+              "quantity": 0.133,
+              "unit": "kg"
+            },
+            {
+              "material_id": "dried_hops",
+              "description": "Dual-purpose hop variety, 5.5 g/L, scaled for 440 ml",
+              "quantity": 0.0024,
+              "unit": "kg"
+            },
+            {
+              "material_id": "brewer_yeast",
+              "description": "Dry ale yeast pitch, scaled for 440 ml batch",
+              "quantity": 0.0008,
+              "unit": "kg"
+            },
+            {
+              "material_id": "road_freight",
+              "description": "Malt and hops from supplier to brewery (avg 500 km, 0.137 kg total ingredients)",
+              "quantity": 69,
+              "unit": "kg·km"
+            }
+          ]
+        },
+        {
+          "name": "Brewing and fermentation",
+          "flows": [
+            {
+              "material_id": "natural_gas_heat_EU",
+              "description": "Wort boiling, scaled for 440 ml batch",
+              "quantity": 0.293,
+              "unit": "kWh"
+            },
+            {
+              "material_id": "electricity_grid_NL",
+              "description": "Mash tun agitation, pumps, glycol cooling, scaled for 440 ml",
+              "quantity": 0.107,
+              "unit": "kWh"
+            },
+            {
+              "material_id": "process_water",
+              "description": "Mash water, sparge water, vessel rinsing, scaled for 440 ml",
+              "quantity": 5.6,
+              "unit": "L"
+            },
+            {
+              "material_id": "wastewater_brewery",
+              "description": "Spent grain runoff, trub, fermenter bottoms, scaled for 440 ml",
+              "quantity": 3.73,
+              "unit": "L"
+            },
+            {
+              "material_id": "co2_beverage",
+              "description": "Carbonation dosing at 5.5 g/L, scaled for 440 ml",
+              "quantity": 0.0024,
+              "unit": "kg"
+            },
+            {
+              "material_id": "diatomaceous_earth",
+              "description": "Kieselguhr filtration, scaled for 440 ml",
+              "quantity": 0.0005,
+              "unit": "kg"
+            },
+            {
+              "material_id": "sodium_hydroxide",
+              "description": "Caustic CIP cleaning, scaled for 440 ml",
+              "quantity": 0.0016,
+              "unit": "kg"
+            }
+          ]
+        },
+        {
+          "name": "Can manufacturing",
+          "flows": [
+            {
+              "material_id": "tinplate_steel_primary",
+              "description": "Virgin tinplate coil (40% of 45 g can body and lid weight)",
+              "quantity": 0.018,
+              "unit": "kg"
+            },
+            {
+              "material_id": "tinplate_steel_recycled",
+              "description": "Recycled tinplate via electric arc furnace (60% content)",
+              "quantity": 0.027,
+              "unit": "kg"
+            },
+            {
+              "material_id": "polypropylene",
+              "description": "Easy-open ring pull tab liner and end seal",
+              "quantity": 0.0008,
+              "unit": "kg"
+            },
+            {
+              "material_id": "natural_gas_heat_GLO",
+              "description": "Steel strip rolling and annealing at origin mill (global gas mix at mill location)",
+              "quantity": 0.38,
+              "unit": "kWh"
+            },
+            {
+              "material_id": "electricity_grid_EU",
+              "description": "Can body forming (DWI process), internal lacquering, lithographic printing",
+              "quantity": 0.25,
+              "unit": "kWh"
+            },
+            {
+              "material_id": "sea_freight",
+              "description": "Tinplate coil from steel mill to can manufacturer by container ship (~5 000 km, 0.045 kg coil)",
+              "quantity": 225,
+              "unit": "kg·km"
+            },
+            {
+              "material_id": "road_freight",
+              "description": "Tinplate coil from port to can manufacturing plant (~300 km, 0.045 kg)",
+              "quantity": 14,
+              "unit": "kg·km"
+            }
+          ]
+        },
+        {
+          "name": "Filling and seaming",
+          "flows": [
+            {
+              "material_id": "electricity_grid_NL",
+              "description": "Can filler, double seamer, date coder, palletiser",
+              "quantity": 0.028,
+              "unit": "kWh"
+            },
+            {
+              "material_id": "process_water",
+              "description": "Can exterior rinse and filling line sanitation",
+              "quantity": 0.38,
+              "unit": "L"
+            },
+            {
+              "material_id": "phosphoric_acid",
+              "description": "Surface passivation rinse prior to filling (removes residual lacquer cure residue)",
+              "quantity": 0.0006,
+              "unit": "kg"
+            }
+          ]
+        },
+        {
+          "name": "Distribution",
+          "flows": [
+            {
+              "material_id": "road_freight",
+              "description": "Primary distribution: brewery to regional DC (230 km, 0.485 kg filled can)",
+              "quantity": 112,
+              "unit": "kg·km"
+            },
+            {
+              "material_id": "road_freight",
+              "description": "Secondary distribution: DC to retail outlet (70 km, 0.485 kg)",
+              "quantity": 34,
+              "unit": "kg·km"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
