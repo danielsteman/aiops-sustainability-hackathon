@@ -12,6 +12,7 @@ export type StoreAction =
   | { type: 'loadDataset'; payload: Dataset }
   | { type: 'setFileHandle'; payload: FileSystemFileHandle | null }
   | { type: 'setImportError'; payload: boolean }
+  | { type: 'setDirty'; payload: boolean }
   | { type: '__markSaved' }
   | {
       type: 'setFlowQuantity'
@@ -86,6 +87,9 @@ export function datasetReducer(
 
     case 'setImportError':
       return { ...state, importError: action.payload }
+
+    case 'setDirty':
+      return { ...state, dirty: action.payload }
 
     case '__markSaved':
       return { ...state, dirty: false }

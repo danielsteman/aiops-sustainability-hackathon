@@ -278,6 +278,16 @@ describe('dataset store actions: persistence bookkeeping', () => {
     expect(result.importError).toBe(true)
   })
 
+  it('setDirty sets and clears the dirty flag without touching the dataset', () => {
+    const dataset = loadDataset()
+    const state = baseState(dataset)
+    const result = run(state, { type: 'setDirty', payload: true })
+    expect(result.dirty).toBe(true)
+    expect(result.dataset).toBe(dataset)
+    const cleared = run(result, { type: 'setDirty', payload: false })
+    expect(cleared.dirty).toBe(false)
+  })
+
   it('__markSaved clears the dirty flag', () => {
     const state = run(baseState(), {
       type: 'renameProduct',

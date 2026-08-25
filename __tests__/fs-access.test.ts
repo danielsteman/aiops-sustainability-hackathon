@@ -6,6 +6,7 @@ import {
   openDataset,
   restoreHandle,
   reconnect,
+  extractDroppedFile,
 } from '@/src/persistence/fs-access'
 import type { Dataset } from '@/src/domain/types'
 
@@ -128,3 +129,46 @@ describe('reconnect', () => {
     expect(result.status).toBe('prompt')
   })
 })
+
+describe('extractDroppedFile', () => {
+  function makeDataTransfer(items: DataTransferItem[]): DataTransfer {
+    return { items } as unknown as DataTransfer
+  }
+
+  it('returns a ready dropped file with a writable handle', async () => {
+    const file = new File(['{"a":1}'], 'data.json')
+    const handle = makeHandle({})
+    const dt = makeDataTransfer([makeDataTransferItem('file', { handle, file })])
+    const result = await extractDroppedFile(dt)
+    expect(result?.status).toBe('ready')
+    if (result?.status === 'ready') {
+      expect(result.handle).toBe(handle)
+      expect(result.text).toBe('{"a":1}')
+    }
+  })
+
+  it('returns a no-handle result when the browser refuses a handle', async () => {
+    const file = new File(['{"a":1}'], 'data.json')
+    const dt = makeDataTransfer([makeDataTransferItem('file', { handle: null, file })])
+    const result = await extractDroppedFile(dt)
+    expect(result?.status).toBe('no-handle')
+    if (result?.status === 'no-handle') expect(result.text).toBe('{"a":1}')
+  })
+
+  it('returns null when the drop contains no files', async () => {
+    const dt = makeDataTransfer([makeDataTransferItem('string', { handle: null })])
+    const result = await extractDroppedFile(dt)
+    expect(result).toBeNull()
+  })
+})
+
+function makeDataTransferItem(
+  kind: string,
+  opts: { handle: FileSystemFileHandle | null; file?: File },
+): DataTransferItem {
+  return {
+    kind,
+    getAsFile: () => opts.file ?? new File(['x'], 'x'),
+    getAsFileSystemHandle: async () => opts.handle,
+  } as unknown as DataTransferItem
+}

@@ -91,11 +91,12 @@ export function historyReducer(
         return { present, past: [], future: [], coalesce: emptyCoalesce() }
       }
 
-      // Bookkeeping actions (handle, import status, save) mutate present in
-      // place without entering the undo/redo timeline.
+      // Bookkeeping actions (handle, import status, dirty flag, save) mutate
+      // present in place without entering the undo/redo timeline.
       if (
         action.type === 'setFileHandle' ||
         action.type === 'setImportError' ||
+        action.type === 'setDirty' ||
         action.type === '__markSaved'
       ) {
         return { ...state, present: datasetReducer(state.present, action) }

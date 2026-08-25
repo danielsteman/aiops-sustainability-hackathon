@@ -70,6 +70,7 @@ function basePersistence(
     saveStatus: { state: 'idle' },
     open: vi.fn(),
     saveAsFile: vi.fn(),
+    importDroppedFile: vi.fn(),
     retrySave: vi.fn(),
     reconnectHandle: vi.fn(async () => {}),
     ...overrides,
@@ -189,5 +190,48 @@ describe('HomeShell: app shell', () => {
   it('renders the persistence indicator in ready phase', () => {
     render(<Home />)
     expect(screen.getByTestId('indicator')).toBeInTheDocument()
+  })
+
+  it('renders the drop zone when no dataset is loaded', () => {
+    render(<Home />)
+    expect(
+      screen.getByRole('heading', { name: /drop your lca dataset here/i }),
+    ).toBeInTheDocument()
+  })
+
+  it('browse triggers open() from the empty drop zone', () => {
+    const { open } = basePersistence()
+    mockedUsePersistence.mockReturnValue(
+      basePersistence({ open }) as unknown as ReturnType<typeof usePersistence>,
+    )
+    render(<Home />)
+    fireEvent.click(screen.getByRole('button', { name: /browse files/i }))
+    expect(open).toHaveBeenCalledTimes(1)
+  })
+
+  it('manual-creation link renders in the empty drop zone', () => {
+    render(<Home />)
+    expect(
+      screen.getByRole('link', {
+        name: /or start from scratch and create a product manually/i,
+      }),
+    ).toBeInTheDocument()
+  })
+
+  it('does not render the drop zone once a dataset is loaded', () => {
+    mockedUseStore.mockReturnValue({
+      ...baseStore(),
+      state: {
+        ...baseStore().state,
+        present: { ...baseStore().state.present, dataset: {} },
+      },
+    } as unknown as ReturnType<typeof useStore>)
+    render(<Home />)
+    expect(
+      screen.queryByRole('heading', { name: /drop your lca dataset here/i }),
+    ).not.toBeInTheDocument()
+    expect(
+      screen.getByRole('heading', { name: 'AIOps Sustainability Hackathon' }),
+    ).toBeInTheDocument()
   })
 })

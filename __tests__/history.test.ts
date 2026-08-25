@@ -141,6 +141,19 @@ describe('historyReducer: import clears history', () => {
   })
 })
 
+describe('historyReducer: bookkeeping actions', () => {
+  it('setDirty mutates present in place without entering the timeline', () => {
+    let state = baseHistory()
+    state = run(state, { type: 'setDirty', payload: true })
+    expect(state.present.dirty).toBe(true)
+    expect(state.past).toHaveLength(0)
+
+    state = run(state, { type: '__undo' })
+    expect(state.present.dirty).toBe(true)
+    expect(state.past).toHaveLength(0)
+  })
+})
+
 describe('historyReducer: redo', () => {
   it('redo returns to the undone state', () => {
     let state = baseHistory()

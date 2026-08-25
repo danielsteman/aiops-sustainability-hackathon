@@ -6,6 +6,10 @@ export interface OpenedDataset {
   text: string
 }
 
+export type DroppedFile =
+  | { status: 'ready'; handle: FileSystemFileHandle; text: string }
+  | { status: 'no-handle'; text: string }
+
 /**
  * Prompts the user to pick a `.json` file and reads its contents.
  * Restricted to JSON via the `types` filter.
@@ -21,6 +25,30 @@ export async function openDataset(): Promise<OpenedDataset> {
   })
   const file = await handle.getFile()
   return { handle, text: await file.text() }
+}
+
+/**
+ * Extracts a dropped file from a drag/drop `DataTransfer` and reads it via
+ * `getAsFileSystemHandle()` so the resulting handle stays writable. Returns
+ * `null` when the drop contains no files. A dropped file whose browser refuses
+ * to grant a handle is still read as text and reported as `{ status:
+ * 'no-handle' }` — it must be treated as dirty rather than silently becoming
+ * read-only.
+ */
+export async function extractDroppedFile(
+  dataTransfer: DataTransfer,
+): Promise<DroppedFile | null> {
+  for (const item of Array.from(dataTransfer.items)) {
+    if (item.kind !== 'file') continue
+    const handle = await item.getAsFileSystemHandle()
+    const file = await item.getAsFile()
+    if (!file) return null
+    if (!handle) {
+      return { status: 'no-handle', text: await file.text() }
+    }
+    return { status: 'ready', handle, text: await file.text() }
+  }
+  return null
 }
 
 /**

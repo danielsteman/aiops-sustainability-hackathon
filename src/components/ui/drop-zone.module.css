@@ -1,0 +1,61 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  width: 100%;
+  padding: 80px 40px;
+  background: var(--colors-surface);
+  border: 2px dashed var(--colors-divider);
+  border-radius: 4px;
+  color: var(--colors-text-muted);
+  transition: var(--motion-base);
+}
+
+.cardDragging {
+  border-color: var(--colors-primary);
+  color: var(--colors-primary);
+  background: color-mix(in srgb, var(--colors-primary) 7%, transparent);
+}
+
+.heading {
+  margin: 0;
+  font-size: 33px;
+  font-weight: 600;
+  line-height: 1.2;
+  color: var(--colors-text);
+}
+
+.sub {
+  margin: 0;
+  font-size: 17px;
+  color: var(--colors-text-muted);
+}
+
+.browse {
+  margin-top: 1rem;
+}
+
+.iconDragging {
+  color: var(--colors-primary);
+}
+
+.error {
+  margin: 0.5rem 0 0;
+  font-size: 14px;
+  color: var(--colors-error);
+}
+
+.manualLink {
+  margin-top: 1.25rem;
+  font-size: 20px;
+  color: var(--colors-text);
+  border-bottom: 1px solid currentColor;
+}

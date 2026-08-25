@@ -40,3 +40,7 @@ interface Window {
     options?: SaveFilePickerOptions,
   ): Promise<FileSystemFileHandle>
 }
+
+interface DataTransferItem {
+  getAsFileSystemHandle(): Promise<FileSystemFileHandle | null>
+}

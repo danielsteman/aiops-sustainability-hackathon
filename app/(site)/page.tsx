@@ -8,6 +8,7 @@ import {
 } from '@/src/persistence/browser-support'
 import { usePersistence } from '@/src/persistence/use-persistence'
 import { PersistenceIndicator } from '@/src/persistence/persistence-indicator'
+import { DropZone } from '@/src/components/ui'
 
 export const dynamic = 'force-static'
 
@@ -31,8 +32,15 @@ function PersistenceApp() {
   const { state, dispatch, canUndo, canRedo } = useStore()
   useUndoRedoShortcuts(dispatch)
 
-  const { phase, saveStatus, open, saveAsFile, retrySave, reconnectHandle } =
-    usePersistence(state, dispatch)
+  const {
+    phase,
+    saveStatus,
+    open,
+    saveAsFile,
+    importDroppedFile,
+    retrySave,
+    reconnectHandle,
+  } = usePersistence(state, dispatch)
 
   return (
     <div className="flex min-h-screen">
@@ -84,13 +92,25 @@ function PersistenceApp() {
       </aside>
 
       <main className="flex-1 p-8">
-        <h1 className="text-2xl font-semibold">
-          AIOps Sustainability Hackathon
-        </h1>
-        <p className="mt-2 max-w-xl leading-7 text-zinc-600">
-          Open a dataset to start editing. Changes are written straight back to
-          your JSON file.
-        </p>
+        {state.present.dataset === null ? (
+          <DropZone
+            onDropFile={(dataTransfer) => void importDroppedFile(dataTransfer)}
+            onBrowse={() => void open()}
+            onCreateManual={() => {
+              /* LCA-046 opens the New product modal */
+            }}
+          />
+        ) : (
+          <>
+            <h1 className="text-2xl font-semibold">
+              AIOps Sustainability Hackathon
+            </h1>
+            <p className="mt-2 max-w-xl leading-7 text-zinc-600">
+              Open a dataset to start editing. Changes are written straight back
+              to your JSON file.
+            </p>
+          </>
+        )}
       </main>
     </div>
   )

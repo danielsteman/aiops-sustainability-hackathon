@@ -8,6 +8,7 @@ import {
   restoreHandle,
   reconnect,
   datasetFromText,
+  extractDroppedFile,
 } from '@/src/persistence/fs-access'
 import {
   persistHandle,
@@ -23,6 +24,7 @@ export interface UsePersistenceResult {
   saveStatus: ReturnType<typeof useAutosave>['status']
   open: () => Promise<void>
   saveAsFile: () => Promise<void>
+  importDroppedFile: (dataTransfer: DataTransfer) => Promise<void>
   retrySave: () => void
   reconnectHandle: () => Promise<void>
 }
@@ -90,6 +92,35 @@ export function usePersistence(
     await persistHandle(handle)
   }, [dispatch, present.dataset])
 
+  /**
+   * Imports a dataset dropped onto the drop zone. Reads it through
+   * `getAsFileSystemHandle()` when the browser grants a writable handle; a
+   * dropped file that yields no handle is imported as dirty so it is never
+   * silently treated as read-only.
+   */
+  const importDroppedFile = useCallback(
+    async (dataTransfer: DataTransfer) => {
+      try {
+        const dropped = await extractDroppedFile(dataTransfer)
+        if (!dropped) return
+        const dataset = datasetFromText(dropped.text)
+        const result = validate(dropped.text)
+        dispatch({ type: 'loadDataset', payload: dataset })
+        dispatch({ type: 'setImportError', payload: !result.ok })
+        if (dropped.status === 'ready') {
+          dispatch({ type: 'setFileHandle', payload: dropped.handle })
+          await persistHandle(dropped.handle)
+        } else {
+          dispatch({ type: 'setFileHandle', payload: null })
+          dispatch({ type: 'setDirty', payload: true })
+        }
+      } catch {
+        // leave state untouched on transient errors
+      }
+    },
+    [dispatch],
+  )
+
   const onHandleReconnect = useCallback(async () => {
     const handle = await readPersistedHandle()
     if (!handle) {
@@ -121,6 +152,7 @@ export function usePersistence(
     saveStatus,
     open,
     saveAsFile,
+    importDroppedFile,
     retrySave: retry,
     reconnectHandle: onHandleReconnect,
   }
