@@ -1,0 +1,75 @@
+.topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  padding: 20px 40px;
+  background: var(--colors-surface);
+  border-bottom: 1px solid var(--colors-divider);
+  flex-shrink: 0;
+}
+
+.heading {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+
+.title {
+  font-size: 40px;
+  font-weight: 300;
+  line-height: 1.1;
+  color: var(--colors-text);
+  margin: 0;
+  white-space: nowrap;
+}
+
+.dataset {
+  font-size: 17px;
+  line-height: 1.4;
+  color: var(--colors-text-muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-shrink: 0;
+}
+
+.history {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.historyButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 4px;
+  border: 1px solid transparent;
+  background: transparent;
+  color: var(--colors-text-muted);
+  cursor: pointer;
+  transition:
+    background var(--motion-base),
+    color var(--motion-base),
+    border-color var(--motion-base);
+}
+
+.historyButton:hover:not(:disabled) {
+  color: var(--colors-text);
+  background: var(--colors-surface-hover);
+}
+
+.historyButton:disabled {
+  color: var(--colors-disabled);
+  cursor: not-allowed;
+}
