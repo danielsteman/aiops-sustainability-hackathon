@@ -5,6 +5,7 @@ import { EmptyState } from '@/src/components/layout/empty-state'
 import { NewProductAction } from '@/src/components/layout/new-product-action'
 import { useNewProductModal } from '@/src/components/layout/new-product-modal'
 import { useStore } from '@/src/store/store'
+import { CompareView } from '@/src/components/compare'
 
 export default function ComparePage() {
   const { state, dispatch, canUndo, canRedo } = useStore()
@@ -51,9 +52,7 @@ export default function ComparePage() {
             onAction={open}
           />
         ) : (
-          <div className="rounded border border-stone-200 bg-white p-8">
-            {dataset.products.length} products ready to compare
-          </div>
+          <CompareView />
         )}
       </div>
     </div>
