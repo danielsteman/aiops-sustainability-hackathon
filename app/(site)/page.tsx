@@ -117,12 +117,11 @@ function Overview() {
   const factorsById = Object.fromEntries(
     dataset.emission_factor_database.map((f) => [f.id, f]),
   )
-  const comparison =
-    compare(
-      dataset.products[0]!,
-      dataset.products[1]!,
-      factorsById,
-    )
+  const comparison = compare(
+    dataset.products[0]!,
+    dataset.products[1]!,
+    factorsById,
+  )
   const summary = summarise(comparison)
 
   return (
@@ -175,10 +174,7 @@ function ProductCards({ dataset }: { dataset: Dataset }) {
                     key={category}
                     category={category}
                     value={impact.normalised[category]}
-                    stageShares={stageShares(
-                      impact.byStage,
-                      category,
-                    )}
+                    stageShares={stageShares(impact.byStage, category)}
                   />
                 ))}
               </div>

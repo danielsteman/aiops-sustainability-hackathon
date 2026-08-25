@@ -12,7 +12,12 @@ function loadDataset(): Dataset {
 }
 
 function baseState(): StoreState {
-  return { dataset: loadDataset(), fileHandle: null, dirty: false }
+  return {
+    dataset: loadDataset(),
+    fileHandle: null,
+    dirty: false,
+    importError: false,
+  }
 }
 
 describe('selectors', () => {
